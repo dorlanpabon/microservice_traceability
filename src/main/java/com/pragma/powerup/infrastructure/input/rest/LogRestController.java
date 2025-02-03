@@ -7,7 +7,6 @@ import com.pragma.powerup.application.handler.LogHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,17 +22,6 @@ public class LogRestController {
 
     private final LogHandler logHandler;
 
-    @Operation(summary = "Get all logs", description = "Retrieve a list of logs")
-    @GetMapping
-    public ResponseEntity<Page<LogResponse>> getLogs(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "asc") String sortDirection
-    ) {
-        Page<LogResponse> logs = logHandler.getLogs(page, size, sortDirection);
-        return ResponseEntity.ok(logs);
-    }
-
     @Operation(summary = "Create a new log", description = "Add a new log to the system")
     @PostMapping("/")
     public ResponseEntity<Void> saveLogInLog(@RequestBody LogRequest logRequest) {
@@ -47,27 +35,6 @@ public class LogRestController {
         return ResponseEntity.ok(logHandler.getLogFromLog());
     }
 
-    @Operation(summary = "Retrieve Log by ID", description = "Get a single log by its ID")
-    @GetMapping("/{id}")
-    public ResponseEntity<LogResponse> getLogFromLog(@PathVariable(name = "id") String logId) {
-        return ResponseEntity.ok(logHandler.getLogFromLog(logId));
-    }
-
-    @Operation(summary = "Update log", description = "Update an existing log in the system")
-    @PutMapping("/")
-    public ResponseEntity<Void> updateLogInLog(@RequestBody LogRequest logRequest) {
-        logHandler.updateLogInLog(logRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Delete log by ID", description = "Remove an existing log from the system")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLogFromLog(@PathVariable String logId) {
-        logHandler.deleteLogFromLog(logId);
-        return ResponseEntity.noContent().build();
-    }
-
-    // Get Logs by Order ID
     @Operation(summary = "Get logs by order ID", description = "Retrieve a list of logs by order ID")
     @GetMapping("/order/{orderId}")
     @PreAuthorize("hasRole('CLIENT')")
@@ -84,7 +51,6 @@ public class LogRestController {
         return ResponseEntity.ok(logTime);
     }
 
-    //Get time in INIT and END by list of orders passed by parameter
     @Operation(summary = "Get time in INIT and END by list of orders", description = "Retrieve the time in INIT and END by list of orders")
     @GetMapping("/order/time")
     @PreAuthorize("hasRole('OWNER')")
@@ -93,7 +59,6 @@ public class LogRestController {
         return ResponseEntity.ok(logTime);
     }
 
-    // Ranking average time by list of orders passed by parameter
     @Operation(summary = "Get average time by list of orders", description = "Retrieve the average time by list of orders")
     @GetMapping("/average-time")
     @PreAuthorize("hasRole('OWNER')")

@@ -14,5 +14,4 @@ public interface ILogRepository extends MongoRepository<LogEntity, String> {
 
     List<LogEntity> findByOrderId(Long orderId);
 
-    List<LogEntity> findByOrderIdIn(List<Long> orderIds);
 }

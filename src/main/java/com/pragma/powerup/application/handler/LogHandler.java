@@ -24,12 +24,6 @@ public class LogHandler implements ILogHandler {
     private final ILogServicePort logServicePort;
 
     @Override
-    public Page<LogResponse> getLogs(int page, int size, String sortDirection) {
-        return logServicePort.getLogs(page, size, sortDirection)
-                .map(logResponseMapper::toLogResponse);
-    }
-
-    @Override
     public void saveLogInLog(LogRequest logRequest) {
         Log log = logRequestMapper.toLog(logRequest);
         logServicePort.saveLog(log);
@@ -40,23 +34,6 @@ public class LogHandler implements ILogHandler {
         return logServicePort.getAllLog().stream()
                 .map(logResponseMapper::toLogResponse)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public LogResponse getLogFromLog(String logId) {
-        Log log = logServicePort.getLogById(logId);
-        return logResponseMapper.toLogResponse(log);
-    }
-
-    @Override
-    public void updateLogInLog(LogRequest logRequest) {
-        Log log = logRequestMapper.toLog(logRequest);
-        logServicePort.updateLog(log);
-    }
-
-    @Override
-    public void deleteLogFromLog(String logId) {
-        logServicePort.deleteLog(logId);
     }
 
     @Override

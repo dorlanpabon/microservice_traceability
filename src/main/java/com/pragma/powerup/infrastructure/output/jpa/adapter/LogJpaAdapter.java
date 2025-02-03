@@ -23,9 +23,6 @@ public class LogJpaAdapter implements ILogPersistencePort {
 
     @Override
     public void saveLog(Log log) {
-        //if (logRepository.findByName(log.getName()).isPresent()) {
-        //    throw new IllegalArgumentException("Log already exists");
-        //}
         logRepository.save(logEntityMapper.toEntity(log));
     }
 
@@ -39,59 +36,9 @@ public class LogJpaAdapter implements ILogPersistencePort {
     }
 
     @Override
-    public Log getLogById(String logId) {
-        return logEntityMapper.toLog(logRepository.findById(logId)
-                .orElseThrow(() -> new IllegalArgumentException("Log not found")));
-    }
-
-    @Override
-    public void updateLog(Log log) {
-        //if (logRepository.findByName(log.getName()).isPresent()) {
-        //    throw new IllegalArgumentException("Log already exists");
-        //}
-        logRepository.save(logEntityMapper.toEntity(log));
-    }
-
-    @Override
-    public void deleteLog(String logId) {
-        logRepository.deleteById(logId);
-    }
-
-    @Override
-    public Page<Log> getLogs(PageRequest pageRequest) {
-        Page<LogEntity> entityPage = logRepository.findAll(pageRequest);
-        if (entityPage.isEmpty()) {
-            throw new IllegalArgumentException("No Logs found");
-        }
-        return entityPage.map(logEntityMapper::toLog);
-    }
-
-    @Override
-    public Page<Log> getLogs(int page, int size, boolean ascending) {
-        Pageable pageable = PageRequest.of(page, size, ascending ? Sort.by("id").ascending() : Sort.by("id").descending());
-        return logRepository.findAll(pageable).map(logEntityMapper::toLog);
-    }
-
-    @Override
-    public Page<Log> getLogs(int pageNumber, int pageSize, String sortDirection) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sortDirection.equals("asc") ? Sort.by("id").ascending() : Sort.by("id").descending());
-        return logRepository.findAll(pageable).map(logEntityMapper::toLog);
-    }
-
-    @Override
-    public Page<Log> findAll(Pageable pageable) {
-        return logRepository.findAll(pageable).map(logEntityMapper::toLog);
-    }
-
-    @Override
     public List<Log> getLogsByOrderId(Long orderId) {
         List<LogEntity> entityList = logRepository.findByOrderId(orderId);
         return logEntityMapper.toLogList(entityList);
     }
 
-    @Override
-    public List<Log> getLogsByOrderIds(List<Long> orderIds) {
-        List<LogEntity> entityList = logRepository.findByOrderIdIn(orderIds);
-        return logEntityMapper.toLogList(entityList);
-    }
 }

@@ -35,38 +35,6 @@ public class LogUseCase implements ILogServicePort {
     }
 
     @Override
-    public Log getLogById(String logId) {
-        return logPersistencePort.getLogById(logId);
-    }
-
-    @Override
-    public void updateLog(Log log) {
-        logPersistencePort.updateLog(log);
-    }
-
-    @Override
-    public void deleteLog(String logId) {
-        logPersistencePort.deleteLog(logId);
-    }
-
-    @Override
-    public Page<Log> getLogs(int page, int size, boolean ascending) {
-        return null;
-    }
-
-    @Override
-    public Page<Log> getLogs(int pageNumber, int pageSize, String sortDirection) {
-        Sort sort = Sort.by("name");
-        if ("desc".equalsIgnoreCase(sortDirection)) {
-            sort = sort.descending();
-        } else {
-            sort = sort.ascending();
-        }
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        return logPersistencePort.findAll(pageable);
-    }
-
-    @Override
     public List<Log> getLogsByOrderId(Long orderId) {
         return logPersistencePort.getLogsByOrderId(orderId);
     }
