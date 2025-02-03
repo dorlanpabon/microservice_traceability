@@ -29,9 +29,6 @@ public class LogJpaAdapter implements ILogPersistencePort {
     @Override
     public List<Log> getAllLog() {
         List<LogEntity> entityList = logRepository.findAll();
-        if (entityList.isEmpty()) {
-            throw new IllegalArgumentException("No Logs found");
-        }
         return logEntityMapper.toLogList(entityList);
     }
 

@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.LogRequest;
 import com.pragma.powerup.application.dto.LogResponse;
 import com.pragma.powerup.application.dto.LogTimeResponse;
 import com.pragma.powerup.application.handler.LogHandler;
+import com.pragma.powerup.infrastructure.constants.InfrastructureConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class LogRestController {
 
     @Operation(summary = "Create a new log", description = "Add a new log to the system")
     @PostMapping("/")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_EMPLOYEE_OR_CLIENT)
     public ResponseEntity<Void> saveLogInLog(@RequestBody LogRequest logRequest) {
         logHandler.saveLogInLog(logRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -37,7 +39,7 @@ public class LogRestController {
 
     @Operation(summary = "Get logs by order ID", description = "Retrieve a list of logs by order ID")
     @GetMapping("/order/{orderId}")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_CLIENT)
     public ResponseEntity<List<LogResponse>> getLogsByOrderId(@PathVariable Long orderId) {
         List<LogResponse> logs = logHandler.getLogsByOrderId(orderId);
         return ResponseEntity.ok(logs);
@@ -45,7 +47,7 @@ public class LogRestController {
 
     @Operation(summary = "Get time in INIT and END by order ID", description = "Retrieve the time in INIT and END by order ID")
     @GetMapping("/order/{orderId}/time")
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_OWNER)
     public ResponseEntity<LogTimeResponse> getLogsTimeByOrderId(@PathVariable Long orderId) {
         LogTimeResponse logTime = logHandler.getLogsTimeByOrderId(orderId);
         return ResponseEntity.ok(logTime);
@@ -53,7 +55,7 @@ public class LogRestController {
 
     @Operation(summary = "Get time in INIT and END by list of orders", description = "Retrieve the time in INIT and END by list of orders")
     @GetMapping("/order/time")
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_OWNER)
     public ResponseEntity<List<LogTimeResponse>> getLogsTimeByOrders(@RequestParam List<Long> orderIds) {
         List<LogTimeResponse> logTime = logHandler.getLogsTimeByOrders(orderIds);
         return ResponseEntity.ok(logTime);
@@ -61,7 +63,7 @@ public class LogRestController {
 
     @Operation(summary = "Get average time by list of orders", description = "Retrieve the average time by list of orders")
     @GetMapping("/average-time")
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_OWNER)
     public ResponseEntity<Double> getAverageTimeByOrders(@RequestParam List<Long> orderIds) {
         Double averageTime = logHandler.getAverageTimeByOrders(orderIds);
         return ResponseEntity.ok(averageTime);

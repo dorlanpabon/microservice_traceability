@@ -26,11 +26,6 @@ public class BeanConfigurationLog {
 
     @Bean
     public ILogServicePort logServicePort() {
-        return new LogUseCase(logPersistencePort()) {
-            @Override
-            public Page<Log> getLogs(int page, int size, boolean ascending) {
-                return null;
-            }
-        };
+        return new LogUseCase(logPersistencePort());
     }
 }

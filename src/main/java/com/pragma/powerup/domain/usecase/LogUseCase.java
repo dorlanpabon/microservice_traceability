@@ -2,18 +2,12 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.ILogServicePort;
 import com.pragma.powerup.domain.enums.OrderStatusEnum;
-import com.pragma.powerup.domain.exception.DomainException;
 import com.pragma.powerup.domain.model.Log;
 import com.pragma.powerup.domain.spi.ILogPersistencePort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LogUseCase implements ILogServicePort {
