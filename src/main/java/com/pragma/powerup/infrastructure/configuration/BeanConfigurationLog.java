@@ -1,7 +1,6 @@
 package com.pragma.powerup.infrastructure.configuration;
 
 import com.pragma.powerup.domain.api.ILogServicePort;
-import com.pragma.powerup.domain.model.Log;
 import com.pragma.powerup.domain.spi.ILogPersistencePort;
 import com.pragma.powerup.domain.usecase.LogUseCase;
 import com.pragma.powerup.infrastructure.output.jpa.adapter.LogJpaAdapter;
@@ -10,7 +9,6 @@ import com.pragma.powerup.infrastructure.output.jpa.repository.ILogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
 
 @Configuration
 @RequiredArgsConstructor

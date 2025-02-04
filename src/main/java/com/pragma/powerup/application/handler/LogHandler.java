@@ -8,7 +8,6 @@ import com.pragma.powerup.application.mapper.LogResponseMapper;
 import com.pragma.powerup.domain.api.ILogServicePort;
 import com.pragma.powerup.domain.model.Log;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-//@Transactional
 public class LogHandler implements ILogHandler {
 
     private final LogRequestMapper logRequestMapper;
@@ -46,7 +44,7 @@ public class LogHandler implements ILogHandler {
     @Override
     public LogTimeResponse getLogsTimeByOrderId(Long orderId) {
         Long time = logServicePort.getLogsTimeByOrderId(orderId);
-        return new LogTimeResponse(orderId, time);
+        return logResponseMapper.toLogTimeResponse(time, orderId);
     }
 
     @Override

@@ -22,4 +22,8 @@ public interface LogResponseMapper {
     @Mapping(target = "orderId", source = "orderId")
     @Mapping(target = "time", source = "time")
     LogTimeResponse toLogTimeResponse(Log log);
+
+    @Mapping(target = "orderId", expression = "java(orderId)")
+    @Mapping(target = "time", expression = "java(time)")
+    LogTimeResponse toLogTimeResponse(Long time, Long orderId);
 }

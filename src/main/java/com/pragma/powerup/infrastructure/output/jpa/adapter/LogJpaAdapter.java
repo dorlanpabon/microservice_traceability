@@ -1,16 +1,11 @@
 package com.pragma.powerup.infrastructure.output.jpa.adapter;
 
-import com.pragma.powerup.application.dto.LogResponse;
 import com.pragma.powerup.domain.model.Log;
 import com.pragma.powerup.domain.spi.ILogPersistencePort;
 import com.pragma.powerup.infrastructure.output.jpa.entity.LogEntity;
 import com.pragma.powerup.infrastructure.output.jpa.mapper.LogEntityMapper;
 import com.pragma.powerup.infrastructure.output.jpa.repository.ILogRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
